@@ -658,11 +658,11 @@ importers:
   packages/web-app-dicom-viewer:
     dependencies:
       '@cornerstonejs/core':
-        specifier: 1.5.0
-        version: 1.5.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
+        specifier: ^1.13.0
+        version: 1.13.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
       '@cornerstonejs/dicom-image-loader':
-        specifier: 1.5.0
-        version: 1.5.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
+        specifier: ^1.13.0
+        version: 1.13.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
       '@cornerstonejs/tools':
         specifier: 3.0.2
         version: 3.0.2
@@ -670,8 +670,8 @@ importers:
         specifier: 0.1.8
         version: 0.1.8
       dicom-parser:
-        specifier: 1.8.3
-        version: 1.8.3
+        specifier: ^1.8.21
+        version: 1.8.21
       hammerjs:
         specifier: 2.0.8
         version: 2.0.8
@@ -4792,8 +4792,8 @@ packages:
     engines: {node: '>=0.14'}
     dev: false
 
-  /@cornerstonejs/core@1.5.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1):
-    resolution: {integrity: sha512-AytOb2eepFaF95WuufXe+u3q4Xtu/BNPYppiFJlupGk7a1vRO0ESb+p+EJnZB3UCeJOr26ToVbpXPGvihpPv5Q==}
+  /@cornerstonejs/core@1.13.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1):
+    resolution: {integrity: sha512-IdeHDiD6pUquM9rYQ8FX3xKSfyGYNoqQGMaL9dkkh1ujgDrezDpL1rGE8+J3LHzEvfuUuYxmGJG3rK7FR+HlYg==}
     dependencies:
       '@kitware/vtk.js': 27.3.1(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
       detect-gpu: 5.0.36
@@ -4806,14 +4806,14 @@ packages:
       - wslink
     dev: false
 
-  /@cornerstonejs/dicom-image-loader@1.5.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1):
-    resolution: {integrity: sha512-F4uD1E7o+F9gY6w2L35gtIHDyojZPTvmhP9Dl5trh5ApPPlrEQ3KFsz4DKS/FAnNhiKOIS6B1hvM07YHM8Fj1Q==}
+  /@cornerstonejs/dicom-image-loader@1.13.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1):
+    resolution: {integrity: sha512-tGIHyRH5gUDtgWuU2IsXBroM6t3PH8BHhtL80fzbq7Zh8NKo+MymLDX8qAn49Omkzrq1cNu4wkn0Jl1psGFOTw==}
     dependencies:
       '@cornerstonejs/codec-charls': 1.2.3
       '@cornerstonejs/codec-libjpeg-turbo-8bit': 1.2.2
       '@cornerstonejs/codec-openjpeg': 1.2.2
       '@cornerstonejs/codec-openjph': 2.4.2
-      '@cornerstonejs/core': 1.5.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
+      '@cornerstonejs/core': 1.13.0(@babel/preset-env@7.21.5)(autoprefixer@10.4.14)(webpack@4.46.0)(wslink@1.11.1)
       dicom-parser: 1.8.21
       pako: 2.1.0
       uuid: 9.0.0
@@ -10452,10 +10452,6 @@ packages:
 
   /dicom-parser@1.8.21:
     resolution: {integrity: sha512-lYCweHQDsC8UFpXErPlg86Px2A8bay0HiUY+wzoG3xv5GzgqVHU3lziwSc/Gzn7VV7y2KeP072SzCviuOoU02w==}
-    dev: false
-
-  /dicom-parser@1.8.3:
-    resolution: {integrity: sha512-CMeUr+jea7Ml70N+/Z5Pd2MYtvLp6IU+TnvdLe6VRVKzZuTeYLYyuAQa9R+sFK4v4N39hig+hKHN+Wfi9sQ6GA==}
     dev: false
 
   /didyoumean@1.2.2:

@@ -1,36 +1,23 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import DicomViewer from '../../src/DicomViewer.vue'
-// const DicomViewer = require('../../src/DicomViewer.vue')
 
-// describe('DicomViewer.veu', () => {
-//   test('is a Veu instance', () => {
-//     expect(true).toBe(true)
-//   })
-// })
+const dicomTestFilePath = './testfiles/MRBRAIN.dcm' // check if this needs to be an import or a const
+const dicomURL = 'https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
 
-// describe('DicomViewer.veu', () => {
-//   test('is a Veu instance', () => {
-//     const wrapper = mount(DicomViewer, {
-//       propsData: {
-//         viewer: {
-//           name: 'viewer',
-//           completed: false
-//         }
-//       }
-//     })
-//     expect(wrapper.isVisible()).toBeTruthy()
-//   })
-// })
+describe('DicomViewer.veu', () => {
+  test('is a Veu instance', () => {
+    const spyCornerstoneInit = jest
+      .spyOn(DicomViewer.methods, 'initCornerstoneCore')
+      .mockImplementation(() => jest.fn())
 
-describe('DicomViewer', () => {
-  it('has data', () => {
-    const wrapper = mount(DicomViewer)
-    wrapper.vm.initCornerstoneCore()
-    // const test = DicomViewer.initCornerstoneCore();
-    // console.log(test);
+    const wrapper = shallowMount(DicomViewer, {
+      propsData: {
+        url: dicomURL,
+        currentContent: true,
+        resource: dicomTestFilePath
+      }
+    })
 
-    console.log('testing')
-
-    // expect(typeof DicomViewer.data).toBe('function')
+    expect(wrapper.isVisible()).toBeTruthy()
   })
 })
