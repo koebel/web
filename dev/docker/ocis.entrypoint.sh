@@ -2,4 +2,7 @@
 set -eo pipefail
 [[ "${DEBUG}" == "true" ]] && set -x
 
-exec /usr/bin/ocis server
+sleep 3
+
+ocis init --insecure true || true
+ocis server
