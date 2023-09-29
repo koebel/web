@@ -1,4 +1,4 @@
-import DicomViewer from '../../src/DicomViewer.vue'
+import App from '../../src/App.vue'
 
 import { nextTick, ref } from 'vue'
 import {
@@ -64,7 +64,7 @@ describe('Dicom viewer app', () => {
     it('should add wadouri prefix to dicom file path', async () => {
       const dicomURL = 'https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
       const wadouriDicomURL = 'wadouri:https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
-      const modifiedURL = await DicomViewer.methods.addWadouriPrefix(dicomURL)
+      const modifiedURL = await App.methods.addWadouriPrefix(dicomURL)
       expect(modifiedURL).toEqual(wadouriDicomURL)
     })
   })
