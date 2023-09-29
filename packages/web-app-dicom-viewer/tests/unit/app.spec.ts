@@ -15,21 +15,21 @@ import { mock } from 'jest-mock-extended'
 
 // -------------------------------------------------
 // suggested test cases
-// - is Cornerstone core initalized on "beforeUpdate"
-// - is RenderEngine enabled (on "beforeUpdate")
-// - is div element with id="dicom-canvas" visible (on "beforeUpdate")
-// - does canvas element with class="cornerstone-canvas" exist? (on "beforeUpdate")
-// - test addWadouriPrefix() function
+// - is Cornerstone core initalized on "mounted" in vue lifecyle
+// - is RenderEngine enabled (on "mounted")
+// - is div element with id="dicom-canvas" visible (on "mounted")
+// - does canvas element with class="cornerstone-canvas" exist? (on "mounted")
+// - test addWadouriPrefix() function (done)
 // - when a dcm file (mock or real file? --> upload local file) is set on stack, does the viewport then contain the corresponding data (by getting the content of the file as datastring)?
-// - when a dcm file is set on stack, does the viewport then contain the corresponding meta data?
-// - test if the correct sop class is displayed
+// - when a dcm file is set on stack, does the viewport then contain the corresponding basic meta data, e.g. user name (also UI still needs to be implemented, see screenshots)?
+// - maybe test if the correct sop class is displayed (will only be visible in show metadata, not yet implemented)
 // - test prefetching meta data (function not yet fully implemented)
 //
 // -------------------------------------------------
 // more test cases for controls (implementation work in progress, in separate branch)
-// - do the controls exist (rotate, zoom, flip, invert, reset)
-// - test if the functionality of these controls is working properly (check the value of a certain pixel?)
-// - test if image manipulation is possible through mouse interaction (not yet implemented)
+// - do the controls exist (rotate, zoom, flip, invert, reset --> wip, don't test yet)
+// - test if the functionality of each of these controls is working properly (check the value of a certain pixel?)
+// - test if image manipulation is possible through mouse interaction (not yet implemented --> no priority to implement)
 // -------------------------------------------------
 
 // -------------------------------------------------
