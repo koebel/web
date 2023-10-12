@@ -3,7 +3,7 @@
     <div
       v-show="displayDicomViewerMain"
       id="dicom-viewer-main"
-      class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around oc-p-s"
+      class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around oc-p-s dicom-image-viewport"
       :class="isShowMetadataActivated ? 'oc-width-2-3' : 'oc-width-1-1'"
     >
       <!-- div element for dicom viewport -->
@@ -61,24 +61,24 @@
           />
         </oc-button>
       </div>
-      <dicom-controls
-        :files="dicomFiles"
-        :active-index="0"
-        :is-folder-loading="false"
-        :current-image-rotation="currentImageRotation"
-        :current-image-zoom="currentImageZoom"
-        :is-show-metadata-activated="isShowMetadataActivated"
-        @set-zoom="setZoom"
-        @set-rotation="setRotation"
-        @set-horizontal-flip="setHorizontalFlip"
-        @set-vertical-flip="setVerticalFlip"
-        @toggle-inversion="toggleInversion"
-        @reset-viewport="resetViewport"
-        @toggle-show-metadata="toggleShowMetadata"
-        @toggle-previous="prev"
-        @toggle-next="next"
-      />
     </div>
+    <dicom-controls
+      :files="dicomFiles"
+      :active-index="0"
+      :is-folder-loading="false"
+      :current-image-rotation="currentImageRotation"
+      :current-image-zoom="currentImageZoom"
+      :is-show-metadata-activated="isShowMetadataActivated"
+      @set-zoom="setZoom"
+      @set-rotation="setRotation"
+      @set-horizontal-flip="setHorizontalFlip"
+      @set-vertical-flip="setVerticalFlip"
+      @toggle-inversion="toggleInversion"
+      @reset-viewport="resetViewport"
+      @toggle-show-metadata="toggleShowMetadata"
+      @toggle-previous="prev"
+      @toggle-next="next"
+    />
 
     <metadata-sidebar
       v-show="isShowMetadataActivated"
@@ -785,8 +785,8 @@ export default defineComponent({
 
 .dicom-canvas {
   border: none;
-  width: 600px; // 100%;
-  height: 600px; // 100%;
+  width: 75vh; // 100%;
+  height: 75vh; // 100%;
 }
 
 .dicom-metadata {
@@ -843,5 +843,21 @@ export default defineComponent({
   }
 
   border-bottom: 1px solid var(--oc-color-border);
+}
+
+.dicom-image-viewport {
+  height: 90vh;
+}
+@media only screen and (max-width: 959px) {
+  .dicom-canvas {
+    max-height: 90vw;
+    max-width: 90vw;
+    object-fit: contain;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .dicom-image-viewport {
+    height: 80vh;
+  }
 }
 </style>
