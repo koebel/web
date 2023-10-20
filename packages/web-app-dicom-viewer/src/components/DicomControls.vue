@@ -287,6 +287,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.preview-details {
+  margin-bottom: 22px;
+}
+
 .preview-details.lightbox {
   z-index: 1000;
   opacity: 0.9;
