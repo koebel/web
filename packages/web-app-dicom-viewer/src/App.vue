@@ -3,7 +3,7 @@
     <div
       v-show="displayDicomViewerMain"
       id="dicom-viewer-main"
-      class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around oc-p-s"
+      class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around"
       :class="isShowMetadataActivated ? 'oc-width-2-3' : 'oc-width-1-1'"
     >
       <div id="dicom-canvas" class="dicom-canvas oc-position-relative">
@@ -373,6 +373,8 @@ export default defineComponent({
   // "created" runs before DOM is rendered, data and events are already accessible
   async created() {
     console.log('lifecycle @ created')
+    window.addEventListener('resize', this.handleScreenSize)
+    this.handleScreenSize()
 
     // get resource, ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
@@ -469,6 +471,7 @@ export default defineComponent({
     this.isMetadataFetched = false
   },
   unmounted() {
+    window.removeEventListener('resize', this.handleScreenSize)
     console.log('lifecycle @ unmounted')
   },
   methods: {
@@ -962,6 +965,14 @@ export default defineComponent({
     },
     toggleShowMetadata() {
       this.isShowMetadataActivated = !this.isShowMetadataActivated
+    },
+    handleScreenSize() {
+      const size = window.innerWidth
+      if (size < 960) {
+        this.isSmallScreen = true
+      } else {
+        this.isSmallScreen = false
+      }
     }
   }
 })
@@ -978,8 +989,8 @@ export default defineComponent({
 
 .dicom-canvas {
   border: none;
-  width: 600px; // 100%;
-  height: 600px; // 100%;
+  width: 75vh;
+  aspect-ratio: 1/1 auto;
 }
 
 .dicom-metadata {
@@ -1027,5 +1038,12 @@ export default defineComponent({
   }
 
   border-bottom: 1px solid var(--oc-color-border);
+}
+
+@media (max-width: $oc-breakpoint-medium-default) {
+  .dicom-canvas {
+    max-height: 85vw;
+    max-width: 85vw;
+  }
 }
 </style>
