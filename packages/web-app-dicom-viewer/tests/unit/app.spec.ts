@@ -81,10 +81,23 @@ describe('dicom viewer app', () => {
       const formatedLabel = 'Patient Name'
       expect(App.methods.formatLabel(label)).toEqual(formatedLabel)
     })
-    it('should format a metadata variable name with underlines into a nicely readible label', () => {
+    it('should format a metadata variable name with underlines and abbreviations into a nicely readible label', () => {
       const label = 'SOP_InstanceUID'
       const formatedLabel = 'SOP Instance UID'
       expect(App.methods.formatLabel(label)).toEqual(formatedLabel)
     })
   })
 })
+
+function getWrapper(props = {}) {
+  return {
+    wrapper: shallowMount(App, {
+      props: {
+        ...props
+      },
+      global: {
+        plugins: [...defaultPlugins()]
+      }
+    })
+  }
+}
