@@ -127,7 +127,6 @@
           @click="$emit('toggleInversion')"
         >
           <oc-icon fill-type="fill" name="contrast" variation="inherit" />
-          <!-- alternative icon: "speaker-2" -->
         </oc-button>
       </div>
 
@@ -142,7 +141,6 @@
           @click="$emit('resetViewport')"
         >
           <oc-icon fill-type="line" name="arrow-go-back" variation="inherit" />
-          <!-- alternative icon: "loop-left" -->
         </oc-button>
       </div>
 
