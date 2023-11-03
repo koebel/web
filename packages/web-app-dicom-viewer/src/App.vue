@@ -929,10 +929,10 @@ export default defineComponent({
 
       const result = label.replace(/([A-Z]+)/g, ' $1').replace('_', '')
 
-      // optionally make first letter of each word lower?
-      // return upperFirst(result.toLowerCase())
-
-      return upperFirst(result)
+      // remove leading empty character from labels that are starting with uppercase letter
+      return result.indexOf(' ') == 0
+        ? upperFirst(result.substring(1, result.length))
+        : upperFirst(result)
     },
     // functions relating to dicom controls
     prev() {
