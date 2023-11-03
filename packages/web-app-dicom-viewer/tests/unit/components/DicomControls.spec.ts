@@ -29,7 +29,6 @@ describe('DicomControls component', () => {
         const { wrapper } = getWrapper()
         await wrapper.find(selectors.controlsPrevious).trigger('click')
         expect(wrapper.emitted('togglePrevious').length).toBe(1)
-        //expect(wrapper.emitted('togglePrevious').length).toBeTruthy()
       })
     })
     describe('next button', () => {
@@ -170,8 +169,6 @@ describe('DicomControls component', () => {
       expect(wrapper.emitted('toggleShowMetadata').length).toBe(1)
     })
   })
-
-  // test if proper icon is displayed depending on show metadata status
 })
 
 function getWrapper(props = {}) {

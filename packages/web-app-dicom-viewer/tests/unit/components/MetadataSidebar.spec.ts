@@ -1,7 +1,5 @@
-import { Resource } from 'web-client/src'
 import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'
 import { defaultPlugins, shallowMount } from 'web-test-helpers'
-import { mock } from 'jest-mock-extended'
 
 const selectors = {
   controlsBack: '.header__back',
