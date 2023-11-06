@@ -143,22 +143,13 @@ if (navigator.hardwareConcurrency) {
 var config = {
   maxWebWorkers,
   startWebWorkersOnDemand: true,
-  // TODO: further look into the specifics of the configuration
-  // webWorkerTaskPaths: [],
   taskConfiguration: {
     decodeTask: {
       initializeCodecsOnStartup: true,
-      strict: false // true
+      strict: false
     }
   }
 }
-
-/*
-var config = {
-  maxWebWorkers: navigator.hardwareConcurrency || 1,
-  startWebWorkersOnDemand: true
-}
-*/
 
 try {
   cornerstoneDICOMImageLoader.webWorkerManager.initialize(config)
