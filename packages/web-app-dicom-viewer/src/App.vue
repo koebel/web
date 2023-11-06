@@ -346,7 +346,6 @@ export default defineComponent({
       renderingEngine: null,
       viewport: null,
       viewportCameraParallelScale: 1,
-      dicomFileName: null,
       dicomUrl: null,
       imageData: null,
       toolInfoElement: null,
@@ -379,9 +378,6 @@ export default defineComponent({
 
     // get resource, ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
-      if (this.resource != (null || undefined)) {
-        this.dicomFileName = this.resource.name
-      }
       this.dicomUrl = await this.addWadouriPrefix(this.url)
     }
 
@@ -435,10 +431,6 @@ export default defineComponent({
     // add resource to stack
     // ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
-      if (this.resource != (null || undefined)) {
-        this.dicomFileName = this.resource.name
-      }
-
       let dicomResourceUrl = await this.addWadouriPrefix(this.url)
 
       // define a stack containing a single image
