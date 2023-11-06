@@ -1,3 +1,5 @@
+import * as cornerstone from '@cornerstonejs/core' // not sure if this import will be needed
+
 import { Resource } from 'web-client/src'
 import App from '../../src/App.vue'
 
@@ -61,6 +63,21 @@ describe('dicom viewer app', () => {
   })
 })
 
+// test initCornerstoneCore() method
+describe('dicom viewer app', () => {
+  describe('Method "initCornerstoneCore"', () => {
+    it('should initzalize Cornerstone core', async () => {
+      // do we need to test this in the scope of unit test?
+    })
+
+    it('should fail with an error if Cornerstone core is not properly initialized', async () => {
+      await expect(() => {
+        App.function.initCornerstoneCore()
+      }).toThrow(TypeError)
+    })
+  })
+})
+
 // test addWadouriPrefix() method
 describe('dicom viewer app', () => {
   describe('Method "addWadouriPrefix"', () => {
@@ -97,6 +114,8 @@ function getWrapper(props = {}) {
       },
       global: {
         plugins: [...defaultPlugins()]
+        //mocks,
+        //provide: mocks
       }
     })
   }
