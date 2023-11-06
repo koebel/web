@@ -347,7 +347,6 @@ export default defineComponent({
       viewport: null,
       viewportCameraParallelScale: 1,
       dicomUrl: null,
-      imageData: null,
       toolInfoElement: null,
       currentImageZoom: 1,
       currentImageRotation: 0,
@@ -443,9 +442,6 @@ export default defineComponent({
       this.viewport.render()
       this.isDicomFileRendered = true
       this.setViewportCameraParallelScaleFactor()
-
-      // get metadata
-      this.imageData = this.viewport.getImageData()
 
       // setting metadata
       this.extractMetadataFromViewport(dicomResourceUrl)
@@ -798,7 +794,7 @@ export default defineComponent({
     },
     extractMetadataFromViewport(imageId: String) {
       // get metadata from viewport
-      this.imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
+      const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
       if (imageId != (null || undefined) && typeof imageId == 'string') {
         console.log('extracting metadata from viewport for image id: ' + imageId)
@@ -807,13 +803,13 @@ export default defineComponent({
 
         // adding values to corresponding variable
         this.imageInformation.rowsX_Columns =
-          this.imageData.dimensions[0] + ' x ' + this.imageData.dimensions[1]
+          imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
         /*
-        this.exampleInformation.direction = this.imageData.direction
+        this.exampleInformation.direction = imageData.direction
           .map((x) => Math.round(x * 100) / 100)
           .join(',')
           // same as Image Orientation Patient
-        this.exampleInformation.origin = this.imageData.origin
+        this.exampleInformation.origin = imageData.origin
           .map((x) => Math.round(x * 100) / 100)
           .join(',')
           // same as Image Position Patient
