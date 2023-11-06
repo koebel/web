@@ -347,7 +347,6 @@ export default defineComponent({
       viewport: null,
       viewportCameraParallelScale: 1,
       dicomUrl: null,
-      toolInfoElement: null,
       currentImageZoom: 1,
       currentImageRotation: 0,
       isVipMetadataFetched: false,
