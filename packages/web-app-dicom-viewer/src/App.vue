@@ -214,7 +214,6 @@ export default defineComponent({
     const { $gettext } = useGettext()
 
     return {
-      // dicom metadata
       vipInformation: {
         patientName: '',
         patientBirthdate: '',
@@ -341,13 +340,12 @@ export default defineComponent({
   },
   data() {
     return {
-      isDicomFileRendered: false,
+      isDicomFileRendered: false, // check if this is needed
       isMetadataExtracted: false,
       element: null,
       renderingEngine: null,
       viewport: null,
       viewportCameraParallelScale: 1,
-      dicomFile: null,
       dicomFileName: null,
       dicomUrl: null,
       imageData: null,
