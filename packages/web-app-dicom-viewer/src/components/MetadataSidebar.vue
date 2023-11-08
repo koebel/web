@@ -1,9 +1,10 @@
 <template>
   <div
     id="dicom-metadata-sidebar"
-    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-width-1-3 oc-height-1-1 oc-ml-xs oc-py-s"
+    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-ml-xs oc-py-s"
+    :class="isSmallScreen ? 'oc-width-1-1' : 'oc-width-1-3'"
   >
-    <div class="sidebar-panel__header header">
+    <div id="dicom-metadata-sidebar-header" class="sidebar-panel__header header">
       <oc-button
         v-if="isSmallScreen"
         v-oc-tooltip="backToMainDescription"
@@ -27,39 +28,29 @@
         <oc-icon name="close" />
       </oc-button>
     </div>
-
     <div v-if="isMetadataExtracted" id="dicom-metadata-sidebar-content" class="oc-p-s">
-      <table class="details-table oc-py-s">
-        <!-- example information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
-              Example Information (Section Title)
-            </p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in dicomMetadata[0]" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
-        </tr>
+      <table class="details-table">
         <!-- patient information section -->
         <tr>
           <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Patient Information</p>
+            <p
+              class="oc-py-s oc-font-semibold dicom-metadata-section-title dicom-metadata-first-section"
+            >
+              Patient Information
+            </p>
           </th>
         </tr>
-        <tr v-for="(value, key) in dicomMetadata[1]" :key="key">
+        <tr v-for="(value, key) in patientInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
           <td>{{ value || '–' }}</td>
         </tr>
         <!-- study information section -->
-
         <tr>
           <th colspan="2">
             <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Study Information</p>
           </th>
         </tr>
-        <tr v-for="(value, key) in dicomMetadata[2]" :key="key">
+        <tr v-for="(value, key) in studyInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
           <td>{{ value || '–' }}</td>
         </tr>
@@ -69,7 +60,19 @@
             <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Series Information</p>
           </th>
         </tr>
-        <tr v-for="(value, key) in dicomMetadata[3]" :key="key">
+        <tr v-for="(value, key) in seriesInformation" :key="key">
+          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
+          <td>{{ value || '–' }}</td>
+        </tr>
+        <!-- instance information section -->
+        <tr>
+          <th colspan="2">
+            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
+              Instance Information
+            </p>
+          </th>
+        </tr>
+        <tr v-for="(value, key) in instanceInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
           <td>{{ value || '–' }}</td>
         </tr>
@@ -79,7 +82,51 @@
             <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Image Information</p>
           </th>
         </tr>
-        <tr v-for="(value, key) in dicomMetadata[4]" :key="key">
+        <tr v-for="(value, key) in imageInformation" :key="key">
+          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
+          <td>{{ value || '–' }}</td>
+        </tr>
+        <!-- equipment information section -->
+        <tr>
+          <th colspan="2">
+            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
+              Equipment Information
+            </p>
+          </th>
+        </tr>
+        <tr v-for="(value, key) in equipmentInformation" :key="key">
+          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
+          <td>{{ value || '–' }}</td>
+        </tr>
+        <!-- scanning information section -->
+        <tr>
+          <th colspan="2">
+            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
+              Scanning Information
+            </p>
+          </th>
+        </tr>
+        <tr v-for="(value, key) in scanningInformation" :key="key">
+          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
+          <td>{{ value || '–' }}</td>
+        </tr>
+        <!-- uids information section -->
+        <tr>
+          <th colspan="2">
+            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">UIDS Information</p>
+          </th>
+        </tr>
+        <tr v-for="(value, key) in uidsInformation" :key="key">
+          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
+          <td>{{ value || '–' }}</td>
+        </tr>
+        <!-- other information section -->
+        <tr>
+          <th colspan="2">
+            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Other Information</p>
+          </th>
+        </tr>
+        <tr v-for="(value, key) in otherInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
           <td>{{ value || '–' }}</td>
         </tr>
@@ -88,25 +135,57 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useGettext } from 'vue3-gettext'
-import { Resource } from 'web-client/src'
 import upperFirst from 'lodash-es/upperFirst'
 
 export default defineComponent({
   name: 'MetadataSidebar',
   props: {
-    dicomMetadata: {
-      type: [Array, Object],
-      required: true
-    },
     isMetadataExtracted: {
       type: Boolean,
+      required: true,
       default: false
     },
     isSmallScreen: {
       type: Boolean,
       default: false
+    },
+    patientInformation: {
+      type: Array,
+      required: true
+    },
+    studyInformation: {
+      type: Array,
+      required: true
+    },
+    seriesInformation: {
+      type: Array,
+      required: true
+    },
+    instanceInformation: {
+      type: Array,
+      required: true
+    },
+    imageInformation: {
+      type: Array,
+      required: true
+    },
+    equipmentInformation: {
+      type: Array,
+      required: true
+    },
+    scanningInformation: {
+      type: Array,
+      required: true
+    },
+    uidsInformation: {
+      type: Array,
+      required: true
+    },
+    otherInformation: {
+      type: Array,
+      required: true
     }
   },
   emits: ['closeMetadataSidebar'],
@@ -140,8 +219,26 @@ export default defineComponent({
   border-left: 1px solid var(--oc-color-border); // TODO: hide line on small screen
   position: relative;
   overflow: hidden;
-  width: 600px;
+  max-width: var(--oc-breakpoint-medium-default);
 }
+#dicom-metadata-sidebar-header {
+  border-bottom: 1px solid var(--oc-color-border);
+  padding-bottom: var(--oc-space-medium);
+}
+
+#dicom-metadata-sidebar-content {
+  height: calc(100% - 55px);
+  // it seems that the bottom is cut off without the offset
+  // the amount of 55px was determined by manual testing with chrome on a mac
+  // it seems to have something to do with the amount of padding that has been added to the sidebar header
+  // TODO: double check on other devices
+  overflow-y: scroll;
+}
+
+#dicom-metadata-sidebar-content table {
+  width: 100%;
+}
+
 .dicom-metadata-section-title {
   //margin: 4px 0px 8px 0px;
   margin-bottom: 0px;
@@ -149,11 +246,12 @@ export default defineComponent({
   border-top: 1px solid var(--oc-color-border);
 }
 
-.details-table {
-  tr {
-    height: 1rem; // reducing hight, originally 1.5rem
-  }
+.dicom-metadata-first-section {
+  padding-top: 0 !important;
+  border-top: none;
+}
 
-  border-bottom: 1px solid var(--oc-color-border);
+.details-table tr {
+  height: 1rem; // reducing hight, originally 1.5rem
 }
 </style>
