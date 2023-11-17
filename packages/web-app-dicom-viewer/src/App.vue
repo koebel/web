@@ -1,10 +1,11 @@
 <template>
   <div class="dicom-viewer oc-width-1-1 oc-height-1-1 oc-flex">
     <div
-      v-show="displayDicomViewerMain"
       id="dicom-viewer-main"
       class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around"
-      :class="isShowMetadataActivated ? 'oc-width-2-3' : 'oc-width-1-1'"
+      :class="
+        isShowMetadataActivated ? 'oc-width-1-2@s oc-width-2-3@m oc-visible@s' : 'oc-width-1-1'
+      "
     >
       <div id="dicom-canvas" class="dicom-canvas oc-position-relative">
         <div
@@ -60,7 +61,6 @@
         :current-image-rotation="currentImageRotation"
         :current-image-zoom="currentImageZoom"
         :is-show-metadata-activated="isShowMetadataActivated"
-        :is-small-screen="isSmallScreen"
         @set-zoom="setZoom"
         @set-rotation="setRotation"
         @set-horizontal-flip="setHorizontalFlip"
@@ -85,7 +85,6 @@
       :uidsInformation="uidsInformation"
       :otherInformation="otherInformation"
       :is-metadata-extracted="isMetadataExtracted"
-      :is-small-screen="isSmallScreen"
       @close-metadata-sidebar="toggleShowMetadata"
     />
   </div>
@@ -352,18 +351,10 @@ export default defineComponent({
       isVipMetadataFetched: false,
       isMetadataFetched: false,
       isShowMetadataActivated: false,
-      isSmallScreen: false, //TODO: implement a method that sets this to true if screensize / browser size is too small to display the main part of dicom viewer together with metadata sidebar
       dicomFiles: [this.resource]
     }
   },
-  computed: {
-    displayDicomViewerMain() {
-      if (this.isSmallScreen && this.isShowMetadataActivated) {
-        return false
-      }
-      return true
-    }
-  },
+  computed: {},
   watch: {},
 
   // --------------------------
@@ -373,8 +364,6 @@ export default defineComponent({
   // "created" runs before DOM is rendered, data and events are already accessible
   async created() {
     console.log('lifecycle @ created')
-    window.addEventListener('resize', this.handleScreenSize)
-    this.handleScreenSize()
 
     // get resource, ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
@@ -471,7 +460,6 @@ export default defineComponent({
     this.isMetadataFetched = false
   },
   unmounted() {
-    window.removeEventListener('resize', this.handleScreenSize)
     console.log('lifecycle @ unmounted')
   },
   methods: {
@@ -965,14 +953,6 @@ export default defineComponent({
     },
     toggleShowMetadata() {
       this.isShowMetadataActivated = !this.isShowMetadataActivated
-    },
-    handleScreenSize() {
-      const size = window.innerWidth
-      if (size < 960) {
-        this.isSmallScreen = true
-      } else {
-        this.isSmallScreen = false
-      }
     }
   }
 })
