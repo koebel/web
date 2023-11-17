@@ -248,4 +248,10 @@ export default defineComponent({
 .details-table tr {
   height: 1rem; // reducing hight, originally 1.5rem
 }
+
+.details-table th,
+td {
+  vertical-align: top;
+  padding: 1px 0px;
+}
 </style>
