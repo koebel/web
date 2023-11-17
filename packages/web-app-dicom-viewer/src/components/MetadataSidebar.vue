@@ -1,14 +1,12 @@
 <template>
   <div
     id="dicom-metadata-sidebar"
-    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-ml-xs oc-py-s"
-    :class="isSmallScreen ? 'oc-width-1-1' : 'oc-width-1-3'"
+    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-ml-xs oc-py-s oc-width-1-1 oc-width-1-2@s oc-width-1-3@m"
   >
     <div id="dicom-metadata-sidebar-header" class="sidebar-panel__header header">
       <oc-button
-        v-if="isSmallScreen"
         v-oc-tooltip="backToMainDescription"
-        class="header__back"
+        class="header__back oc-hidden@m"
         appearance="raw"
         :aria-label="backToMainDescription"
         @click="$emit('closeMetadataSidebar')"
@@ -145,10 +143,6 @@ export default defineComponent({
     isMetadataExtracted: {
       type: Boolean,
       required: true,
-      default: false
-    },
-    isSmallScreen: {
-      type: Boolean,
       default: false
     },
     patientInformation: {
