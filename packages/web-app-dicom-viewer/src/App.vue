@@ -2,7 +2,7 @@
   <div class="dicom-viewer oc-width-1-1 oc-height-1-1 oc-flex">
     <div
       id="dicom-viewer-main"
-      class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around"
+      class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around oc-p-s"
       :class="
         isShowMetadataActivated ? 'oc-width-1-2@s oc-width-2-3@m oc-visible@s' : 'oc-width-1-1'
       "
@@ -1020,10 +1020,10 @@ export default defineComponent({
   border-bottom: 1px solid var(--oc-color-border);
 }
 
-@media (max-width: $oc-breakpoint-medium-default) {
-  .dicom-canvas {
-    max-height: 85vw;
-    max-width: 85vw;
-  }
-}
+// @media (max-width: $oc-breakpoint-medium-default) {
+//   .dicom-canvas {
+//     max-height: 85vw;
+//     max-width: 85vw;
+//   }
+// }
 </style>
