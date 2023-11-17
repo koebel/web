@@ -1019,11 +1019,4 @@ export default defineComponent({
 
   border-bottom: 1px solid var(--oc-color-border);
 }
-
-// @media (max-width: $oc-breakpoint-medium-default) {
-//   .dicom-canvas {
-//     max-height: 85vw;
-//     max-width: 85vw;
-//   }
-// }
 </style>

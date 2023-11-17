@@ -6,7 +6,7 @@
     <div id="dicom-metadata-sidebar-header" class="sidebar-panel__header header">
       <oc-button
         v-oc-tooltip="backToMainDescription"
-        class="header__back oc-hidden@m"
+        class="header__back oc-hidden@s"
         appearance="raw"
         :aria-label="backToMainDescription"
         @click="$emit('closeMetadataSidebar')"
@@ -247,5 +247,10 @@ export default defineComponent({
 
 .details-table tr {
   height: 1rem; // reducing hight, originally 1.5rem
+}
+
+.details-table th,
+td {
+  vertical-align: top;
 }
 </style>
