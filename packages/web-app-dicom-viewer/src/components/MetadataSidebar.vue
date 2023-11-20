@@ -1,7 +1,7 @@
 <template>
   <div
     id="dicom-metadata-sidebar"
-    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-ml-xs oc-py-s oc-width-1-1 oc-width-1-2@s oc-width-1-3@m"
+    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-py-s oc-width-1-1 oc-width-1-2@s oc-width-1-3@m"
   >
     <div id="dicom-metadata-sidebar-header" class="sidebar-panel__header header">
       <oc-button
