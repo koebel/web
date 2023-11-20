@@ -1,14 +1,12 @@
 <template>
   <div
     id="dicom-metadata-sidebar"
-    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-ml-xs oc-py-s"
-    :class="isSmallScreen ? 'oc-width-1-1' : 'oc-width-1-3'"
+    class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-ml-xs oc-py-s oc-width-1-1 oc-width-1-2@s oc-width-1-3@m"
   >
     <div id="dicom-metadata-sidebar-header" class="sidebar-panel__header header">
       <oc-button
-        v-if="isSmallScreen"
         v-oc-tooltip="backToMainDescription"
-        class="header__back"
+        class="header__back oc-hidden@m"
         appearance="raw"
         :aria-label="backToMainDescription"
         @click="$emit('closeMetadataSidebar')"
@@ -42,7 +40,7 @@
         </tr>
         <tr v-for="(value, key) in patientInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- study information section -->
         <tr>
@@ -52,7 +50,7 @@
         </tr>
         <tr v-for="(value, key) in studyInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- series information section -->
         <tr>
@@ -62,7 +60,7 @@
         </tr>
         <tr v-for="(value, key) in seriesInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- instance information section -->
         <tr>
@@ -74,7 +72,7 @@
         </tr>
         <tr v-for="(value, key) in instanceInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- image information section -->
         <tr>
@@ -84,7 +82,7 @@
         </tr>
         <tr v-for="(value, key) in imageInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- equipment information section -->
         <tr>
@@ -96,7 +94,7 @@
         </tr>
         <tr v-for="(value, key) in equipmentInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- scanning information section -->
         <tr>
@@ -108,7 +106,7 @@
         </tr>
         <tr v-for="(value, key) in scanningInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- uids information section -->
         <tr>
@@ -118,7 +116,7 @@
         </tr>
         <tr v-for="(value, key) in uidsInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
         <!-- other information section -->
         <tr>
@@ -128,7 +126,7 @@
         </tr>
         <tr v-for="(value, key) in otherInformation" :key="key">
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td>{{ value || '–' }}</td>
+          <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
       </table>
     </div>
@@ -145,10 +143,6 @@ export default defineComponent({
     isMetadataExtracted: {
       type: Boolean,
       required: true,
-      default: false
-    },
-    isSmallScreen: {
-      type: Boolean,
       default: false
     },
     patientInformation: {
@@ -253,5 +247,11 @@ export default defineComponent({
 
 .details-table tr {
   height: 1rem; // reducing hight, originally 1.5rem
+}
+
+.details-table th,
+td {
+  vertical-align: top;
+  padding: 1px 0px;
 }
 </style>
