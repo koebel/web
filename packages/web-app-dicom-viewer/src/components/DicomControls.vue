@@ -1,9 +1,11 @@
 <template>
   <div class="oc-position-medium oc-position-bottom-center preview-details">
     <div
-      class="oc-background-brand oc-p-s oc-width-xlarge oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
+      class="oc-background-brand oc-p-s oc-width-large oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
     >
       <!-- prev / next -->
+      <!-- hide while functionality is not yet implemented, set class of the wrapper div to 'oc-width-xlarge' once that section is activated -->
+      <!--
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="previousDescription"
@@ -30,42 +32,41 @@
           <oc-icon size="large" name="arrow-drop-right" variation="inherit" />
         </oc-button>
       </div>
+      -->
 
       <!-- zoom -->
-      <div class="oc-flex-middle">
-        <div class="oc-flex">
-          <oc-button
-            v-oc-tooltip="imageShrinkDescription"
-            class="preview-controls-image-shrink"
-            appearance="raw-inverse"
-            variation="brand"
-            :aria-label="imageShrinkDescription"
-            @click="imageShrink"
-          >
-            <oc-icon fill-type="line" name="checkbox-indeterminate" variation="inherit" />
-          </oc-button>
-          <oc-button
-            v-oc-tooltip="imageOriginalSizeDescription"
-            class="preview-controls-image-original-size oc-ml-s oc-mr-s"
-            :class="isShowMetadataActivated ? 'oc-visible@m' : 'oc-visible@s'"
-            appearance="raw-inverse"
-            variation="brand"
-            :aria-label="imageOriginalSizeDescription"
-            @click="$emit('setZoom', 1)"
-          >
-            <span v-text="currentZoomDisplayValue" />
-          </oc-button>
-          <oc-button
-            v-oc-tooltip="imageZoomDescription"
-            class="preview-controls-image-zoom"
-            appearance="raw-inverse"
-            variation="brand"
-            :aria-label="imageZoomDescription"
-            @click="imageZoom"
-          >
-            <oc-icon fill-type="line" name="add-box" variation="inherit" />
-          </oc-button>
-        </div>
+      <div class="oc-flex oc-flex-middle">
+        <oc-button
+          v-oc-tooltip="imageShrinkDescription"
+          class="preview-controls-image-shrink"
+          appearance="raw-inverse"
+          variation="brand"
+          :aria-label="imageShrinkDescription"
+          @click="imageShrink"
+        >
+          <oc-icon fill-type="line" name="checkbox-indeterminate" variation="inherit" />
+        </oc-button>
+        <oc-button
+          v-oc-tooltip="imageOriginalSizeDescription"
+          class="preview-controls-image-original-size oc-ml-s oc-mr-s"
+          :class="isShowMetadataActivated ? 'oc-visible@m' : 'oc-visible@s'"
+          appearance="raw-inverse"
+          variation="brand"
+          :aria-label="imageOriginalSizeDescription"
+          @click="$emit('setZoom', 1)"
+        >
+          <span v-text="currentZoomDisplayValue" />
+        </oc-button>
+        <oc-button
+          v-oc-tooltip="imageZoomDescription"
+          class="preview-controls-image-zoom"
+          appearance="raw-inverse"
+          variation="brand"
+          :aria-label="imageZoomDescription"
+          @click="imageZoom"
+        >
+          <oc-icon fill-type="line" name="add-box" variation="inherit" />
+        </oc-button>
       </div>
 
       <!-- rotation -->
@@ -298,5 +299,10 @@ export default defineComponent({
 
 .preview-controls-image-original-size {
   width: 42px;
+}
+
+// remove this once the prev and next buttons are shown
+.preview-controls-image-shrink .oc-icon {
+  padding: 5px 0px;
 }
 </style>
