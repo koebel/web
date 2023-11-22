@@ -1,12 +1,13 @@
 <template>
   <div class="dicom-viewer oc-width-1-1 oc-height-1-1 oc-flex">
     <div
-      v-show="displayDicomViewerMain"
       id="dicom-viewer-main"
       class="oc-position-relative oc-flex oc-flex-center oc-flex-middle oc-flex-around oc-p-s"
-      :class="isShowMetadataActivated ? 'oc-width-2-3' : 'oc-width-1-1'"
+      :class="
+        isShowMetadataActivated ? 'oc-width-1-2@s oc-width-2-3@m oc-visible@s' : 'oc-width-1-1'
+      "
     >
-      <div id="dicom-canvas" class="dicom-canvas oc-position-relative">
+      <div id="dicom-canvas" class="dicom-canvas oc-position-relative oc-mb-xl">
         <div
           v-if="isVipMetadataFetched"
           id="dicom-viewer-vip-metadata"
@@ -60,7 +61,6 @@
         :current-image-rotation="currentImageRotation"
         :current-image-zoom="currentImageZoom"
         :is-show-metadata-activated="isShowMetadataActivated"
-        :is-small-screen="isSmallScreen"
         @set-zoom="setZoom"
         @set-rotation="setRotation"
         @set-horizontal-flip="setHorizontalFlip"
@@ -85,7 +85,6 @@
       :uidsInformation="uidsInformation"
       :otherInformation="otherInformation"
       :is-metadata-extracted="isMetadataExtracted"
-      :is-small-screen="isSmallScreen"
       @close-metadata-sidebar="toggleShowMetadata"
     />
   </div>
@@ -352,18 +351,10 @@ export default defineComponent({
       isVipMetadataFetched: false,
       isMetadataFetched: false,
       isShowMetadataActivated: false,
-      isSmallScreen: false, //TODO: implement a method that sets this to true if screensize / browser size is too small to display the main part of dicom viewer together with metadata sidebar
       dicomFiles: [this.resource]
     }
   },
-  computed: {
-    displayDicomViewerMain() {
-      if (this.isSmallScreen && this.isShowMetadataActivated) {
-        return false
-      }
-      return true
-    }
-  },
+  computed: {},
   watch: {},
 
   // --------------------------
@@ -978,8 +969,8 @@ export default defineComponent({
 
 .dicom-canvas {
   border: none;
-  width: 600px; // 100%;
-  height: 600px; // 100%;
+  width: 75vh;
+  aspect-ratio: 1/1 auto;
 }
 
 .dicom-metadata {
@@ -1028,4 +1019,11 @@ export default defineComponent({
 
   border-bottom: 1px solid var(--oc-color-border);
 }
+
+// @media (max-width: $oc-breakpoint-medium-default) {
+//   .dicom-canvas {
+//     max-height: 85vw;
+//     max-width: 85vw;
+//   }
+// }
 </style>
