@@ -4,13 +4,7 @@
     class="dicom-metadata-sidebar .sidebar-panel oc-position-relative oc-height-1-1 oc-py-s oc-width-1-1 oc-width-1-2@s oc-width-1-3@m"
   >
     <div id="dicom-metadata-sidebar-header" class="sidebar-panel__header header">
-      <oc-button
-        v-oc-tooltip="backToMainDescription"
-        class="header__back oc-hidden@m"
-        appearance="raw"
-        :aria-label="backToMainDescription"
-        @click="$emit('closeMetadataSidebar')"
-      >
+      <oc-button v-oc-tooltip="backToMainDescription" class="header__back oc-hidden@s">
         <oc-icon name="arrow-left-s" fill-type="line" />
       </oc-button>
 
@@ -252,6 +246,5 @@ export default defineComponent({
 .details-table th,
 td {
   vertical-align: top;
-  padding: 1px 0px;
 }
 </style>
