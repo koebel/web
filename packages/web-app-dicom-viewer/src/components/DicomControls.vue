@@ -1,5 +1,5 @@
 <template>
-  <div class="oc-position-medium oc-position-bottom-center preview-details">
+  <div class="oc-position-medium oc-position-bottom-center preview-controls">
     <div
       class="oc-background-brand oc-p-s oc-width-xlarge oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
     >
@@ -285,9 +285,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.preview-details.lightbox {
+.preview-controls {
   z-index: 1000;
-  opacity: 0.9;
 }
 
 .preview-controls-action-count {
