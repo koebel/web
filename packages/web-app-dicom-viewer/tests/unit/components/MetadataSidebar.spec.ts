@@ -7,6 +7,12 @@ const selectors = {
 }
 
 describe('MetadataSidebar component', () => {
+  describe('mount component', () => {
+    it('should have the id "dicom-metadata-sidebar"', () => {
+      const { wrapper } = getWrapper()
+      expect(wrapper.get('#dicom-metadata-sidebar')).toBeTruthy()
+    })
+  })
   describe('navigation elements', () => {
     describe('back button', () => {
       it('should exist if screen size is small screen', () => {
