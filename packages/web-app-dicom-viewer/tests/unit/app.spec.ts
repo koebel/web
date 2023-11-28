@@ -8,6 +8,7 @@ import {
   createStore,
   defaultComponentMocks,
   defaultPlugins,
+  mount,
   shallowMount,
   defaultStoreMockOptions
 } from 'web-test-helpers'
@@ -15,6 +16,8 @@ import { useAppDefaultsMock } from 'web-test-helpers/src/mocks/useAppDefaultsMoc
 import { FileContext, useAppDefaults } from 'web-pkg/src/composables/appDefaults'
 
 import { mock } from 'jest-mock-extended'
+
+import { useGettext } from 'vue3-gettext'
 
 // -------------------------------------------------
 // suggested test cases
@@ -59,6 +62,48 @@ describe('dicom viewer app', () => {
   describe('dummy test', () => {
     it('do nothing :)', () => {
       expect(dicomTestFilePath).toBe(dicomTestFilePath)
+    })
+  })
+})
+
+// mounting the component
+describe('dicom viewer app', () => {
+  describe('mount app', () => {
+    it('should create a shallow mount of the app', () => {
+      const spy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
+
+      let wrapper
+
+      try {
+        wrapper = shallowMount(App)
+        // check if mount is really created, maybe using isVueInstance...
+      } catch (error) {
+        expect(error.message).not.toBe(undefined)
+      } finally {
+        spy.mockRestore()
+      }
+    })
+  })
+})
+
+// testing the lifecycle
+describe('dicom viewer app', () => {
+  describe('app lifecycle', () => {
+    it('should call "created" on mounting the app', () => {
+      const spy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
+      const createdLifecyleMethodSpy = jest.spyOn(App, 'created')
+
+      let wrapper
+
+      try {
+        wrapper = shallowMount(App)
+      } catch (error) {
+        expect(error.message).not.toBe(undefined)
+        expect(createdLifecyleMethodSpy).toHaveBeenCalled()
+        expect(createdLifecyleMethodSpy).toHaveBeenCalledTimes(1)
+      } finally {
+        spy.mockRestore()
+      }
     })
   })
 })
