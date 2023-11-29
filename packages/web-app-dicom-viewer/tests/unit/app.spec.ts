@@ -76,9 +76,11 @@ describe('dicom viewer app', () => {
 
       try {
         wrapper = shallowMount(App)
-        // check if mount is really created, maybe using isVueInstance...
       } catch (error) {
         expect(error.message).not.toBe(undefined)
+        //expect(wrapper).not.toBe(undefined)
+        //expect(wrapper.exists).toBeTruthy()
+        // it seems like the wrapper instance doesn't really exist...
       } finally {
         spy.mockRestore()
       }
@@ -89,11 +91,11 @@ describe('dicom viewer app', () => {
 // testing the lifecycle
 describe('dicom viewer app', () => {
   describe('app lifecycle', () => {
-    it('should call "created" on mounting the app', () => {
-      const spy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
-      const createdLifecyleMethodSpy = jest.spyOn(App, 'created')
+    const spy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
+    let wrapper
 
-      let wrapper
+    it('should call "created" on mounting the app', () => {
+      const createdLifecyleMethodSpy = jest.spyOn(App, 'created')
 
       try {
         wrapper = shallowMount(App)
@@ -104,6 +106,31 @@ describe('dicom viewer app', () => {
       } finally {
         spy.mockRestore()
       }
+    })
+    it('should call "mounted" on mounting the app', () => {
+      const mountedLifecyleMethodSpy = jest.spyOn(App, 'mounted')
+
+      try {
+        wrapper = shallowMount(App)
+      } catch (error) {
+        expect(error.message).not.toBe(undefined)
+        expect(mountedLifecyleMethodSpy).toHaveBeenCalled()
+        expect(mountedLifecyleMethodSpy).toHaveBeenCalledTimes(1)
+      } finally {
+        spy.mockRestore()
+      }
+    })
+    it('\'s Cornerstone core instance should be initialized at "mounted"', () => {
+      // TODO
+    })
+    it('\'s RenderEngine should be enabled at "mounted"', () => {
+      // TODO
+    })
+    it('should contain element with id="dicom-canvas" / element should be visible at "mounted"', () => {
+      // TODO
+    })
+    it('should contain element with class="cornerstone-canvas" at "mounted"', () => {
+      // TODO
     })
   })
 })
@@ -117,6 +144,7 @@ describe('dicom viewer app', () => {
 
     it('should fail with an error if Cornerstone core is not properly initialized', async () => {
       await expect(() => {
+        // TODO: call the function through the wrapper? wrapper.vm.initCornerstoneCore()
         App.function.initCornerstoneCore()
       }).toThrow(TypeError)
     })
