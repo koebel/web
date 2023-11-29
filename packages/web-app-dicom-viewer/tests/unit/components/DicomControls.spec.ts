@@ -20,6 +20,10 @@ const selectors = {
 
 describe('DicomControls component', () => {
   describe('mount component', () => {
+    it('should exist', () => {
+      const { wrapper } = getWrapper()
+      expect(wrapper.exists).toBeTruthy()
+    })
     it('should have the css class "preview-controls"', () => {
       const { wrapper } = getWrapper()
       expect(wrapper.get('.preview-controls')).toBeTruthy()
