@@ -26,6 +26,7 @@ import { useGettext } from 'vue3-gettext'
 // - is RenderEngine enabled (on "mounted")
 // - is div element with id="dicom-canvas" visible (on "mounted")
 // - does canvas element with class="cornerstone-canvas" exist? (on "mounted")
+// - does id="dicom-viewer-vip-metadata" exist / is visible, try to pass some data through { props } and check if it gets displayed
 // - test addWadouriPrefix() function (DONE)
 // - test custom custom functions regarding metadata (e.g. fetch vip metadata, fetch metadata, etc.)
 // - test custom functions for formatting data (e.g. format label, format date, etc.)
@@ -92,11 +93,12 @@ describe('dicom viewer app', () => {
 describe('dicom viewer app', () => {
   describe('app lifecycle', () => {
     const spy = jest.spyOn(global.console, 'error').mockImplementation(() => {})
+    const createdLifecyleMethodSpy = jest.spyOn(App, 'created')
+    const mountedLifecyleMethodSpy = jest.spyOn(App, 'mounted')
+
     let wrapper
 
     it('should call "created" on mounting the app', () => {
-      const createdLifecyleMethodSpy = jest.spyOn(App, 'created')
-
       try {
         wrapper = shallowMount(App)
       } catch (error) {
@@ -108,8 +110,6 @@ describe('dicom viewer app', () => {
       }
     })
     it('should call "mounted" on mounting the app', () => {
-      const mountedLifecyleMethodSpy = jest.spyOn(App, 'mounted')
-
       try {
         wrapper = shallowMount(App)
       } catch (error) {
@@ -120,17 +120,31 @@ describe('dicom viewer app', () => {
         spy.mockRestore()
       }
     })
-    it('\'s Cornerstone core instance should be initialized at "mounted"', () => {
+    it('Cornerstone core instance should be initialized at "mounted"', () => {
       // TODO
     })
-    it('\'s RenderEngine should be enabled at "mounted"', () => {
-      // TODO
+    it('RenderEngine should be instantiated and have viewport element enabled at "mounted"', () => {
+      // TODO make sure wrapper is properly mounted
+      try {
+        wrapper = shallowMount(App)
+      } catch (error) {
+        expect(error.message).not.toBe(undefined)
+        expect(mountedLifecyleMethodSpy).toHaveBeenCalled()
+        //expect(wrapper.vm.renderingEngine).toBeDefined()
+        //expect(wrapper.vm.renderingEngine.getRenderingEngines().length).toBe(1)
+      } finally {
+        spy.mockRestore()
+      }
     })
     it('should contain element with id="dicom-canvas" / element should be visible at "mounted"', () => {
       // TODO
+      // get wrapper, trigger lifecyle phase
+      // expect(wrapper.get('#dicom-canvas')).toBeTruthy()
     })
-    it('should contain element with class="cornerstone-canvas" at "mounted"', () => {
+    it('should contain element with class="cornerstone-canvas" at "mounted" (only after successful init of Cornerstone)', () => {
       // TODO
+      // get wrapper, trigger lifecyle phase
+      // expect(wrapper.get('.cornerstone-canvas')).toBeTruthy()
     })
   })
 })
@@ -158,6 +172,7 @@ describe('dicom viewer app', () => {
       const dicomURL = 'https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
       const wadouriDicomURL = 'wadouri:https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
       const modifiedURL = await App.methods.addWadouriPrefix(dicomURL)
+      // TODO: call the function through the wrapper? wrapper.vm.addWadouriPrefix(dicomURL)
       expect(modifiedURL).toEqual(wadouriDicomURL)
     })
   })
@@ -170,11 +185,13 @@ describe('dicom viewer app', () => {
       const label = 'patientName'
       const formatedLabel = 'Patient Name'
       expect(App.methods.formatLabel(label)).toEqual(formatedLabel)
+      // TODO: call the function through the wrapper? wrapper.vm.formatLabel(label)
     })
     it('should format a metadata variable name with underlines and abbreviations into a nicely readible label', () => {
       const label = 'SOP_InstanceUID'
       const formatedLabel = 'SOP Instance UID'
       expect(App.methods.formatLabel(label)).toEqual(formatedLabel)
+      // TODO: call the function through the wrapper? wrapper.vm.formatLabel(label)
     })
   })
 })
