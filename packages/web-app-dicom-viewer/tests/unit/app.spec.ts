@@ -26,19 +26,21 @@ import { useGettext } from 'vue3-gettext'
 // - is RenderEngine enabled (on "mounted")
 // - is div element with id="dicom-canvas" visible (on "mounted")
 // - does canvas element with class="cornerstone-canvas" exist? (on "mounted")
-// - does id="dicom-viewer-vip-metadata" exist / is visible, try to pass some data through { props } and check if it gets displayed
+// - does id="dicom-viewer-vip-metadata" exist / is visible
+// - pass some data through { props } on mount and check if that data gets displayed (both for vip metadata and metadata sidebar)
 // - test addWadouriPrefix() function (DONE)
-// - test custom custom functions regarding metadata (e.g. fetch vip metadata, fetch metadata, etc.)
-// - test custom functions for formatting data (e.g. format label, format date, etc.)
+// - test custom custom functions regarding metadata (e.g. fetch vip metadata, fetch metadata, etc.) --> requires most likely mock data object?
+// - test custom functions for formatting data (e.g. format label, format date, etc.) --> there is an issue with $language.current that is used in these functions
 // - when a dcm file (mock or real file? --> upload local file) is set on stack, does the viewport then contain the corresponding data (by getting the content of the file as datastring)?
 // - when a dcm file is set on stack, does the viewport then contain the corresponding vip meta data overlay, e.g. patient name?
 // - maybe test if the correct sop class is displayed (only be visible in show metadata)
 //
-// -------------------------------------------------
-// more test cases for controls
-// - do the controls exist (rotate, zoom, flip, invert, reset, etc.) (DONE)
-// - test if the functionality of each of these controls is working properly (check the value of a certain pixel?)
-// - test if image manipulation is possible through mouse interaction (not yet implemented --> no priority to implement)
+// test cases for dicom controls & metadata sidebar
+// - do the dicom control elements exist (rotate, zoom, flip, invert, reset, etc.) (DONE)
+// - do the interaction elements exist, where applicable check for differences in the corresponding screen size (close/return) (DONE)
+// - test if the functionality of each of these control elements is working properly (check the actual value of a certain pixel or just rely on viewport properties?)
+// - test if image manipulation is possible through mouse interaction (not yet implemented --> so far no priority to implement)
+//
 // -------------------------------------------------
 
 // -------------------------------------------------
