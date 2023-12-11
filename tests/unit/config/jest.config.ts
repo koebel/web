@@ -13,6 +13,7 @@ const esmModules = [
   'd3-scale',
   'd3-time',
   'internmap'
+  // '@cornerstonejs\\+core'
 ].map((m) => `.pnpm/${m}@.*`)
 process.env.TZ = 'GMT'
 module.exports = {
