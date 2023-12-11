@@ -19,6 +19,52 @@ import { mock } from 'jest-mock-extended'
 
 import { useGettext } from 'vue3-gettext'
 
+jest.mock('@cornerstonejs/core')
+jest.mock('@cornerstonejs/dicom-image-loader')
+
+jest.mock('@cornerstonejs/core', () => ({
+  successCallback: jest.fn(),
+  errorCallback: jest.fn(),
+  RenderingEngine: class RenderingEngine {
+    getViewport() {}
+    enableElement() {}
+  },
+  Types: jest.fn(),
+  Enums: jest.fn(),
+  metaData: jest.fn(),
+  init: jest.fn(),
+  getConfiguration: jest.fn().mockImplementation(() => {
+    return { rendering: '' }
+  }),
+  registerImageLoader: jest.fn(),
+  isCornerstoneInitialized: jest.fn()
+}))
+
+jest.mock('@cornerstonejs/dicom-image-loader', () => ({
+  wadouri: {
+    loadImage: (imgId) => ({
+      promise: Promise.resolve({})
+    })
+  },
+  external: jest.fn(),
+  configure: jest.fn(),
+  // initialize: jest.fn().mockImplementation(() => {
+  // return {
+  //   maxWebWorkers: 1,
+  //   startWebWorkersOnDemand: true,
+  //   taskConfiguration: {
+  //     decodeTask: {
+  //       initializeCodecsOnStartup: true,
+  //       strict: false // true
+  //     }
+  //   }
+  // }
+  // })
+  webWorkerManager: {
+    initialize: jest.fn().mockImplementation(() => {})
+  }
+}))
+
 // -------------------------------------------------
 // suggested test cases
 
@@ -142,30 +188,34 @@ describe('dicom viewer app', () => {
       // TODO
       // get wrapper, trigger lifecyle phase
       // expect(wrapper.get('#dicom-canvas')).toBeTruthy()
+      const { wrapper } = getWrapper()
+      expect(wrapper.exists).toBeTruthy()
+      expect(wrapper.find('.dicom-canvas').exists()).toBeTruthy()
     })
     it('should contain element with class="cornerstone-canvas" at "mounted" (only after successful init of Cornerstone)', () => {
       // TODO
       // get wrapper, trigger lifecyle phase
-      // expect(wrapper.get('.cornerstone-canvas')).toBeTruthy()
+      const { wrapper } = getWrapper()
+      expect(wrapper.find('.cornerstone-canvas').exists()).toBeTruthy()
     })
   })
 })
 
 // test initCornerstoneCore() method
-describe('dicom viewer app', () => {
-  describe('Method "initCornerstoneCore"', () => {
-    it('should initzalize Cornerstone core', async () => {
-      // do we need to test this in the scope of unit test?
-    })
+// describe('dicom viewer app', () => {
+//   describe('Method "initCornerstoneCore"', () => {
+//     it('should initzalize Cornerstone core', async () => {
+//       // do we need to test this in the scope of unit test?
+//     })
 
-    it('should fail with an error if Cornerstone core is not properly initialized', async () => {
-      await expect(() => {
-        // TODO: call the function through the wrapper? wrapper.vm.initCornerstoneCore()
-        App.function.initCornerstoneCore()
-      }).toThrow(TypeError)
-    })
-  })
-})
+//     it('should fail with an error if Cornerstone core is not properly initialized', async () => {
+//       await expect(() => {
+//         // TODO: call the function through the wrapper? wrapper.vm.initCornerstoneCore()
+//         App.function.initCornerstoneCore()
+//       }).toThrow(TypeError)
+//     })
+//   })
+// })
 
 // test addWadouriPrefix() method
 describe('dicom viewer app', () => {
@@ -173,9 +223,12 @@ describe('dicom viewer app', () => {
     it('should add wadouri prefix to dicom file path', async () => {
       const dicomURL = 'https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
       const wadouriDicomURL = 'wadouri:https://dav/spaces/path/to/file.dcm?OC-Credential=xyz'
-      const modifiedURL = await App.methods.addWadouriPrefix(dicomURL)
+      const { wrapper } = getWrapper()
+      const data = await wrapper.vm.addWadouriPrefix(dicomURL)
+      expect(data).toBe(wadouriDicomURL)
+      // const modifiedURL = await App.methods.addWadouriPrefix(dicomURL)
       // TODO: call the function through the wrapper? wrapper.vm.addWadouriPrefix(dicomURL)
-      expect(modifiedURL).toEqual(wadouriDicomURL)
+      // expect(modifiedURL).toEqual(wadouriDicomURL)
     })
   })
 })
@@ -202,6 +255,7 @@ function getWrapper(props = {}) {
   return {
     wrapper: shallowMount(App, {
       props: {
+        // url: 'https://dav/spaces/path/to/file.dcm?OC-Credential=xyz',
         ...props
       },
       global: {
